@@ -111,7 +111,7 @@ open class DecisionTree: Equatable, CustomStringConvertible {
   }
 }
 
-/*
+
 /// General form of a decision tree builder
 public protocol DecisionTreeBuilder {
   /// build a tree from a dictionary
@@ -123,4 +123,4 @@ public protocol DecisionTreeBuilder {
   /// - throws: Exception
   static func Build(_ `for`: String, from: [[String: String]], tag: String) throws -> DecisionTree
 }
-*/
+

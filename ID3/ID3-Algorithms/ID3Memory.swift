@@ -17,14 +17,14 @@ public struct ID3EvaluationSheet {
 
 open class DTBuilderID3Memory {
     
-    /*
+    
     public static func Build(_ `for`: String, from: [[String: String]], tag: String = "") throws -> DecisionTree {
         guard let tree = try buildRecursively(`for`, from: from) as? DecisionTree else {
             throw DecisionTree.Exception.GeneralFailure
         }
         return tree
     }
-*/
+
   /// Build a decision tree node recursively.
   public static func buildRecursively(_ topValue: String, from table: [[String: String]]) throws -> Any {
     // Obtain top branch and possible paths gains

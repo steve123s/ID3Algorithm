@@ -11,37 +11,35 @@ import UIKit
 class ViewController: UIViewController {
     
     let records: [[String: String]] = [
-        ["descuento": "sí",  "ejemplares": "<=4", "ventas": "buenas",   "precio": "<=150"],
-        ["descuento": "sí",  "ejemplares": ">4",  "ventas": "buenas",   "precio": ">150"],
-        ["descuento": "sí",  "ejemplares": ">4",  "ventas": "buenas",   "precio": "<=150"],
-        ["descuento": "sí",  "ejemplares": "<=4", "ventas": "buenas",   "precio": ">150"],
-        ["descuento": "sí",  "ejemplares": ">4",  "ventas": "buenas",   "precio": ">150"],
-        ["descuento": "sí",  "ejemplares": ">4",  "ventas": "bajas",    "precio": ">150"],
-        ["descuento": "no",  "ejemplares": "<=4", "ventas": "bajas",    "precio": ">150"],
-        ["descuento": "sí",  "ejemplares": "<=4", "ventas": "bajas",    "precio": ">150"],
-        ["descuento": "sí",  "ejemplares": ">4",  "ventas": "bajas",    "precio": "<=150"],
-        ["descuento": "no",  "ejemplares": "<=4", "ventas": "bajas",    "precio": "<=150"],
-        ["descuento": "no",  "ejemplares": "<=4", "ventas": "promedio", "precio": "<=150"],
-        ["descuento": "no",  "ejemplares": ">4",  "ventas": "promedio", "precio": "<=150"],
-        ["descuento": "sí",  "ejemplares": "<=4", "ventas": "promedio", "precio": ">150"],
-        ["descuento": "sí",  "ejemplares": ">4",  "ventas": "promedio", "precio": ">150"],
-        ["descuento": "no",  "ejemplares": ">4",  "ventas": "promedio", "precio": "<=150"]]
+        ["ganador": "Alemania", "hora": "Mañana", "tipoJuego": "Mundial",  "condicionesCancha": "Excelente",  "local": "1"],
+        ["ganador": "Alemania", "hora": "Tarde",  "tipoJuego": "Olímpicos","condicionesCancha": "Buena",  "local": "1"],
+        ["ganador": "Alemania", "hora": "Noche",  "tipoJuego": "Amistoso", "condicionesCancha": "Mala",  "local": "0"],
+        ["ganador": "México",   "hora": "Tarde",  "tipoJuego": "Amistoso", "condicionesCancha": "Pésima",  "local": "0"],
+        ["ganador": "México",   "hora": "Tarde",  "tipoJuego": "Mundial",  "condicionesCancha": "Buena",  "local": "1"],
+        ["ganador": "Alemania", "hora": "Tarde",  "tipoJuego": "Olímpicos","condicionesCancha": "Excelente",  "local": "1"],
+        ["ganador": "Alemania", "hora": "Tarde",  "tipoJuego": "Olímpicos","condicionesCancha": "Mala",  "local": "1"],
+        ["ganador": "Alemania", "hora": "Tarde",  "tipoJuego": "Olímpicos","condicionesCancha": "Mala",  "local": "1"],
+        ["ganador": "Alemania", "hora": "Mañana", "tipoJuego": "Mundial",  "condicionesCancha": "Excelente",  "local": "1"],
+        ["ganador": "México",   "hora": "Tarde",  "tipoJuego": "Olímpicos","condicionesCancha": "Buena",  "local": "0"],
+        ["ganador": "Alemania", "hora": "Noche",  "tipoJuego": "Amistoso", "condicionesCancha": "Mala",  "local": "0"],
+        ["ganador": "México",   "hora": "Noche",  "tipoJuego": "Mundial",  "condicionesCancha": "Pésima",  "local": "1"],
+        ["ganador": "México",   "hora": "Tarde",  "tipoJuego": "Mundial",  "condicionesCancha": "Buena",  "local": "1"],
+        ["ganador": "Alemania", "hora": "Tarde",  "tipoJuego": "Mundial",  "condicionesCancha": "Excelente",  "local": "1"],
+        ["ganador": "Alemania", "hora": "Tarde",  "tipoJuego": "Olímpicos","condicionesCancha": "Mala",  "local": "1"]]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         do {
-            let tree = try DTBuilderID3Memory.buildRecursively(
-                "descuento", from: records) 
+            let tree = try DTBuilderID3Memory.Build(
+                "ganador", from: records)
             
-            //let newRecord: [String: String] = ["ejemplares": ">4",
-             //                                  "ventas": "promedio",
-             //                                  "precio": "<=150"]
-            //let prediction = try tree.search(newRecord)
-            //print(prediction)
-            print("Success")
+            let newRecord: [String: String] = ["hora": "Tarde",  "tipoJuego": "Olímpicos","condicionesCancha": "Buena",  "local": "1"]
+            let prediction = try tree.search(newRecord)
+            print("\n\nSuccess\n\n")
             print(tree)
+            print("\nprediction: \(prediction)\n")
         } catch {
             print(DecisionTree.Exception.self)
         }
