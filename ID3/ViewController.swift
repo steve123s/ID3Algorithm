@@ -32,16 +32,19 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         do {
+            print("\n\n---------------Inicio-------------------\n\n")
+            // Build decision tree
             let tree = try DTBuilderID3Memory.Build(
                 "ganador", from: records)
-            
+            // Test
             let newRecord: [String: String] = ["hora": "Tarde",  "tipoJuego": "Olímpicos","condicionesCancha": "Buena",  "local": "1"]
             let prediction = try tree.search(newRecord)
-            print("\n\nSuccess\n\n")
-            print(tree)
-            print("\nprediction: \(prediction)\n")
+            
+            print("\n\n---------------Éxito-------------------\n\n")
+            print("Árbol creado: \(tree)")
+            print("\nPredicción: \(prediction)\n")
         } catch {
-            print(DecisionTree.Exception.self)
+            print("Error construyendo el árbol")
         }
         
         

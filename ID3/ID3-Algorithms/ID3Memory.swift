@@ -1,9 +1,6 @@
 //
 //  ID3Memory.swift
 //
-//  Created by Rocky Wei on 2017-10-11.
-//  Copyright © 2017 Rocky Wei. All rights reserved.
-//
 
 import Foundation
 
@@ -20,7 +17,7 @@ open class DTBuilderID3Memory {
     
     public static func Build(_ `for`: String, from: [[String: String]], tag: String = "") throws -> DecisionTree {
         guard let tree = try buildRecursively(`for`, from: from) as? DecisionTree else {
-            throw DecisionTree.Exception.GeneralFailure
+            fatalError()
         }
         return tree
     }
@@ -35,22 +32,21 @@ open class DTBuilderID3Memory {
     guard factors.gain > 0 else {
       guard let firstLine = table.first,
         let firstValue = firstLine[topValue] else {
-          throw DecisionTree.Exception.UnexpectedValue
+          fatalError()
       }
       return firstValue
     }
     
     // Checks for the value with biggest gain
     guard let primary = factors.sorted.first else {
-      throw DecisionTree.Exception.UnexpectedKey
+        fatalError()
     }
-    print("\nBeggest gain path: \(primary)\n")
     
     var subviews: [String: [[String: String]]] = [:]
     for row in table {
       var tempRow = row
       guard let value = tempRow.removeValue(forKey: primary) else {
-        throw DecisionTree.Exception.UnexpectedKey
+        fatalError()
       }
       if subviews[value] != nil {
         subviews[value]?.append(tempRow)
@@ -90,19 +86,19 @@ open class DTBuilderID3Memory {
     
     // Check if there are still rows
     guard let sample = table.first else {
-      throw DecisionTree.Exception.EmptyDataset
+      fatalError()
     }
     
     // Declare keys array and check if key im making my tree for, exists
     let fields: [String] = sample.keys.map { $0 }
     guard fields.contains(topValue) else {
-      throw DecisionTree.Exception.UnexpectedKey
+      fatalError()
     }
     
     // Declare array of fields without main one and checks if it has more than one element
     let factors = fields.filter { $0 != topValue }
     guard factors.count > 1 else {
-      throw DecisionTree.Exception.EmptyColumnset
+      fatalError()
     }
     
     // Calculate gain for each factor
@@ -142,15 +138,14 @@ open class DTBuilderID3Memory {
         }
         
       } else {
-        throw DecisionTree.Exception.UnexpectedKey
+        fatalError()
       }
     }
-    
     print("\nsubview:  \(subview)\n")
     
     // Obtain entropies for each possible path
     let subEntropies = Dictionary(uniqueKeysWithValues: subview.map { ($0, Entropy(of: $1)) })
-    print("\nsubEntropies:  \(subEntropies)\n")
+    print("subEntropies:  \(subEntropies)")
 
     // Obtain possible paths, its final decision frecuencies and total decision frecuencies
     let possiblePaths: [String] = subview.keys.map { $0 }
@@ -183,7 +178,7 @@ open class DTBuilderID3Memory {
     let distribution = Dictionary(uniqueKeysWithValues: counters.map {
       ($0, Double($1) / total)
     })
-    print("\ndistribution: \(distribution)\n")
+    print("\ndistribution: \(distribution)")
     return distribution
   }
 
@@ -197,7 +192,7 @@ open class DTBuilderID3Memory {
         counters[value] = 1
       }
     }
-    print("\nFrequency: \(counters)\n")
+    print("Frequency: \(counters)")
     return counters
   }
 
